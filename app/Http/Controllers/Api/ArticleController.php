@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\ArticleCollection;
-use App\Http\Resources\ArticleResource;
 use App\Models\Article;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\ArticleResource;
+use App\Http\Resources\ArticleCollection;
 
 class ArticleController extends Controller
 {
     public function index()
     {
-        return ArticleCollection::make(Article::all());
+        $articles = Article::applySorts(request('sort'))->get();
+
+        return ArticleCollection::make($articles);
     }
+
     public function show(Article $article)
     {
         return ArticleResource::make($article);

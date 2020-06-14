@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasSorts;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
+    use HasSorts;
+
+    public $allowedSorts = ['title', 'content'];
+
     /**
      * The attributes that aren't mass assignable.
      *
@@ -27,11 +32,11 @@ class Article extends Model
 
     public function category()
     {
-        return $this->belongsTo(\App\Models\Category::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function user()
     {
-        return $this->belongsTo(\App\Models\User::class);
+        return $this->belongsTo(User::class);
     }
 }
