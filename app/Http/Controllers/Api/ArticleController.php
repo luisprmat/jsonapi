@@ -13,20 +13,7 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        $query = Article::query();
-
-        foreach(request('filter', []) as $filter => $value) {
-            if($filter === 'year') {
-                $query->whereYear('created_at', $value);
-            } elseif($filter === 'month') {
-                $query->whereMonth('created_at', $value);
-            } else {
-                $query->where($filter, 'LIKE', "%{$value}%");
-            }
-        }
-
-        $articles = $query->applySorts()->jsonPaginate();
-        // $articles = Article::applyFilters()->applySorts()->jsonPaginate(); //TODO: Mejorar ...
+        $articles = Article::applyFilters()->applySorts()->jsonPaginate();
 
         return ArticleCollection::make($articles);
     }
