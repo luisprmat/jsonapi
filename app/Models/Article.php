@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Article extends Model
 {
-    public $allowedSorts = ['title', 'content'];
-
     /**
      * The attributes that aren't mass assignable.
      *
