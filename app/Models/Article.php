@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Article extends Model
 {
+    public $type = 'articles';
     public $allowedSorts = ['title', 'content'];
 
     /**
@@ -27,6 +28,15 @@ class Article extends Model
         'category_id' => 'integer',
         'user_id' => 'integer',
     ];
+
+    public function fields()
+    {
+        return [
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'content' => $this->content,
+        ];
+    }
 
 
     public function category()

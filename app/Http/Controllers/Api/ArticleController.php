@@ -6,8 +6,8 @@ use App\Models\Article;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ArticleResource;
-use App\Http\Resources\ArticleCollection;
+use App\Http\Resources\ResourceObject;
+use App\Http\Resources\ResourceCollection;
 
 class ArticleController extends Controller
 {
@@ -15,11 +15,11 @@ class ArticleController extends Controller
     {
         $articles = Article::applyFilters()->applySorts()->jsonPaginate();
 
-        return ArticleCollection::make($articles);
+        return ResourceCollection::make($articles);
     }
 
     public function show(Article $article)
     {
-        return ArticleResource::make($article);
+        return ResourceObject::make($article);
     }
 }
