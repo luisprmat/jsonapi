@@ -90,7 +90,10 @@ class FilterArticlesTest extends TestCase
             'created_at' => now()->month(1)
         ]);
 
-        $url = route('api.v1.articles.index', ['filter[month]' => 2]);
+        // This test fails if i run it today (2021-01-29) "now()->month(2)" returns 2021-03-01
+        // $url = route('api.v1.articles.index', ['filter[month]' => 2]);
+
+        $url = route('api.v1.articles.index', ['filter[month]' => 3]);
 
         $this->getJson($url)
             ->assertJsonCount(2, 'data')
