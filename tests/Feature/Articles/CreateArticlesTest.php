@@ -22,7 +22,8 @@ class CreateArticlesTest extends TestCase
                 'type' => 'articles',
                 'attributes' => $article
             ]
-        ])->post(route('api.v1.articles.create'))->assertStatus(401);
+        ])->post(route('api.v1.articles.create'))
+            ->assertStatus(401);
 
         $this->assertDatabaseMissing('articles', $article);
     }
