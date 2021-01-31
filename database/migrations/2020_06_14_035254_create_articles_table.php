@@ -19,7 +19,7 @@ class CreateArticlesTable extends Migration
             $table->string('slug')->unique();
             $table->longText('content');
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignUuid('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
