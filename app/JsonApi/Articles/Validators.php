@@ -38,9 +38,11 @@ class Validators extends AbstractValidators
      *
      * @param mixed|null $record
      *      the record being updated, or null if creating a resource.
+     * @param array $data
+     *      the data that is being validated.
      * @return mixed
      */
-    protected function rules($record = null): array
+    protected function rules($record, array $data): array
     {
         return [
             'title' => ['required'],
