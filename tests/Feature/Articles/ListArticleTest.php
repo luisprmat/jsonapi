@@ -17,7 +17,7 @@ class ListArticleTest extends TestCase
 
         $response = $this->jsonApi()->get(route('api.v1.articles.read', $article));
 
-        $response->assertExactJson([
+        $response->assertJson([
             'data' => [
                 'type' => 'articles',
                 'id' => (string) $article->getRouteKey(),
@@ -44,7 +44,7 @@ class ListArticleTest extends TestCase
 
         $response = $this->jsonApi()->get(route('api.v1.articles.index'));
 
-        $response->assertJsonFragment([
+        $response->assertJson([
             'data' => [
                 [
                     'type' => 'articles',
