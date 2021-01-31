@@ -27,4 +27,20 @@ class IncludeAuthorsTest extends TestCase
             ])
         ;
     }
+
+    /** @test */
+    public function can_fetch_related_authors()
+    {
+        $article = factory(Article::class)->create();
+
+        $this->jsonApi()
+            ->get(route('api.v1.articles.relationships.authors', $article))
+            ->assertSee($article->user->name)
+        ;
+
+        $this->jsonApi()
+            ->get(route('api.v1.articles.relationships.authors.read', $article))
+            ->assertSee($article->user->id)
+        ;
+    }
 }

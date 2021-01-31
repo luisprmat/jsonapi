@@ -33,6 +33,11 @@ class ListArticleTest extends TestCase
                 ]
             ]
         ]);
+
+        $this->assertNull(
+            $response->json('data.relationships.authors.data'),
+            "The key 'data.relationship.authors.data' must be null."
+        );
     }
 
     /** @test */
