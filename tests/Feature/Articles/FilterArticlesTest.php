@@ -76,13 +76,13 @@ class FilterArticlesTest extends TestCase
     public function can_filter_articles_by_month()
     {
         factory(Article::class)->create([
-            'title' => 'Article from February',
-            'created_at' => now()->month(2)
+            'title' => 'Article from March',
+            'created_at' => now()->month(3)
         ]);
 
         factory(Article::class)->create([
-            'title' => 'Another Article from February',
-            'created_at' => now()->month(2)
+            'title' => 'Another Article from March',
+            'created_at' => now()->month(3)
         ]);
 
         factory(Article::class)->create([
@@ -97,8 +97,8 @@ class FilterArticlesTest extends TestCase
 
         $this->jsonApi()->get($url)
             ->assertJsonCount(2, 'data')
-            ->assertSee('Article from February')
-            ->assertSee('Another Article from February')
+            ->assertSee('Article from March')
+            ->assertSee('Another Article from March')
             ->assertDontSee('Article from January')
         ;
     }

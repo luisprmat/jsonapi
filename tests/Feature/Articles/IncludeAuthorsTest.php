@@ -23,7 +23,7 @@ class IncludeAuthorsTest extends TestCase
                 'related' => route('api.v1.articles.relationships.authors', $article)
             ])
             ->assertJsonFragment([
-                'self' => route('api.v1.articles.relationships.authors.replace', $article)
+                'self' => route('api.v1.articles.relationships.authors.read', $article)
             ])
         ;
     }
