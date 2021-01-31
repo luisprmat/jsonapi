@@ -13,9 +13,9 @@ class SortArticlesTest extends TestCase
     /** @test */
     public function it_can_sort_articles_by_title_asc()
     {
-        factory(Article::class)->create(['title' => 'C Title']);
-        factory(Article::class)->create(['title' => 'A Title']);
-        factory(Article::class)->create(['title' => 'B Title']);
+        Article::factory()->create(['title' => 'C Title']);
+        Article::factory()->create(['title' => 'A Title']);
+        Article::factory()->create(['title' => 'B Title']);
 
         $url = route('api.v1.articles.index', ['sort' => 'title']);
 
@@ -29,9 +29,9 @@ class SortArticlesTest extends TestCase
     /** @test */
     public function it_can_sort_articles_by_title_desc()
     {
-        factory(Article::class)->create(['title' => 'C Title']);
-        factory(Article::class)->create(['title' => 'A Title']);
-        factory(Article::class)->create(['title' => 'B Title']);
+        Article::factory()->create(['title' => 'C Title']);
+        Article::factory()->create(['title' => 'A Title']);
+        Article::factory()->create(['title' => 'B Title']);
 
         $url = route('api.v1.articles.index', ['sort' => '-title']);
 
@@ -45,17 +45,17 @@ class SortArticlesTest extends TestCase
     /** @test */
     public function it_can_sort_articles_by_title_and_content()
     {
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'C Title',
             'content' => 'B content'
         ]);
 
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'A Title',
             'content' => 'C content'
         ]);
 
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'B Title',
             'content' => 'D content'
         ]);
@@ -84,7 +84,7 @@ class SortArticlesTest extends TestCase
     /** @test */
     public function it_cannot_sort_articles_by_unknown_fields()
     {
-        factory(Article::class)->times(3)->create();
+        Article::factory()->times(3)->create();
 
         // \DB::listen(function($db) {
         //     dump($db->sql);

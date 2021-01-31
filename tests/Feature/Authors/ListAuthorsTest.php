@@ -14,7 +14,7 @@ class ListAuthorsTest extends TestCase
     /** @test */
     public function can_fetch_single_author()
     {
-        $author = factory(User::class)->create();
+        $author = User::factory()->create();
 
         $response = $this->jsonApi()->get(route('api.v1.authors.read', $author))
             ->assertSee($author->name);
@@ -28,7 +28,7 @@ class ListAuthorsTest extends TestCase
     /** @test */
     public function can_fetch_all_authors()
     {
-        $authors = factory(User::class)->times(3)->create();
+        $authors = User::factory()->times(3)->create();
 
         $this->jsonApi()->get(route('api.v1.authors.index'))
             ->assertSee($authors[0]->name);

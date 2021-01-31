@@ -13,11 +13,11 @@ class FilterArticlesTest extends TestCase
     /** @test */
     public function can_filter_articles_by_title()
     {
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'Aprende Laravel desde Cero'
         ]);
 
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'Otro título'
         ]);
 
@@ -33,11 +33,11 @@ class FilterArticlesTest extends TestCase
     /** @test */
     public function can_filter_articles_by_content()
     {
-        factory(Article::class)->create([
+        Article::factory()->create([
             'content' => '<div>Aprende Laravel desde Cero</div>'
         ]);
 
-        factory(Article::class)->create([
+        Article::factory()->create([
             'content' => '<div>Otro título</div>'
         ]);
 
@@ -53,12 +53,12 @@ class FilterArticlesTest extends TestCase
     /** @test */
     public function can_filter_articles_by_year()
     {
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'Article from 2020',
             'created_at' => now()->year(2020)
         ]);
 
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'Article from 2021',
             'created_at' => now()->year(2021)
         ]);
@@ -75,17 +75,17 @@ class FilterArticlesTest extends TestCase
     /** @test */
     public function can_filter_articles_by_month()
     {
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'Article from March',
             'created_at' => now()->month(3)
         ]);
 
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'Another Article from March',
             'created_at' => now()->month(3)
         ]);
 
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'Article from January',
             'created_at' => now()->month(1)
         ]);
@@ -106,7 +106,7 @@ class FilterArticlesTest extends TestCase
     /** @test */
     public function cannot_filter_articles_by_unknown_filters()
     {
-        factory(Article::class)->create();
+        Article::factory()->create();
 
         $url = route('api.v1.articles.index', ['filter[unknown]' => 2]);
 
@@ -116,17 +116,17 @@ class FilterArticlesTest extends TestCase
     /** @test */
     public function can_search_articles_by_title_and_content()
     {
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'Article from Aprendible',
             'content' => 'Content'
         ]);
 
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'Another Article',
             'content' => 'Content Aprendible ...'
         ]);
 
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'Title 2',
             'content' => 'content 2'
         ]);
@@ -144,22 +144,22 @@ class FilterArticlesTest extends TestCase
     /** @test */
     public function can_search_articles_by_title_and_content_with_multiple_terms()
     {
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'Article from Aprendible',
             'content' => 'Content'
         ]);
 
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'Another Article',
             'content' => 'Content Aprendible ...'
         ]);
 
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'Another Laravel Article',
             'content' => 'Content...'
         ]);
 
-        factory(Article::class)->create([
+        Article::factory()->create([
             'title' => 'Title 2',
             'content' => 'content 2'
         ]);
