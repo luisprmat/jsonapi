@@ -41,7 +41,7 @@ class CreateArticlesTest extends TestCase
 
         $this->assertDatabaseMissing('articles', $article);
 
-        Sanctum::actingAs($user);
+        Sanctum::actingAs($user, ['articles:create']);
 
         $this->jsonApi()->withData([
             'type' => 'articles',
@@ -69,6 +69,40 @@ class CreateArticlesTest extends TestCase
             'slug' => $article['slug'],
             'content' => $article['content']
         ]);
+    }
+
+    /** @test */
+    public function authenticated_users_cannot_create_articles_without_permissions()
+    {
+        $user = User::factory()->create();
+
+        $category = Category::factory()->create();
+
+        $article = Article::factory()->raw();
+
+        Sanctum::actingAs($user);
+
+        $this->jsonApi()->withData([
+            'type' => 'articles',
+            'attributes' => $article,
+            'relationships' => [
+                'authors' => [
+                    'data' => [
+                        'id' => $user->getRouteKey(),
+                        'type' => 'authors'
+                    ]
+                ],
+                'categories' => [
+                    'data' => [
+                        'id' => $category->getRouteKey(),
+                        'type' => 'categories'
+                    ]
+                ]
+            ]
+        ])->post(route('api.v1.articles.create'))
+            ->assertStatus(403);
+
+        $this->assertDatabaseCount('articles', 0);
     }
 
     /** @test */
