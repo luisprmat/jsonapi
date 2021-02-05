@@ -17,11 +17,13 @@ class ArticlePolicy
 
     public function update(User $user, $article)
     {
-        return $article->user->is($user);
+        return $user->tokenCan('articles:update') &&
+            $article->user->is($user);
     }
 
     public function delete(User $user, $article)
     {
-        return $article->user->is($user);
+        return $user->tokenCan('articles:delete') &&
+            $article->user->is($user);
     }
 }
