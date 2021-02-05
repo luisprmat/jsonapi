@@ -118,7 +118,7 @@ class CreateArticlesTest extends TestCase
 
         $this->assertDatabaseMissing('articles', $article);
 
-        Sanctum::actingAs($user, ['articles:create']);
+        Sanctum::actingAs($user);
 
         $this->jsonApi()->withData([
             'type' => 'articles',

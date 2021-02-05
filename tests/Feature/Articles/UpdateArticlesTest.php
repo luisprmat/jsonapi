@@ -187,4 +187,48 @@ class UpdateArticlesTest extends TestCase
             'slug' => 'slug-changed'
         ]);
     }
+
+    /** @test */
+    public function can_replace_the_categories()
+    {
+        $article = Article::factory()->create();
+        $category = Category::factory()->create();
+
+        Sanctum::actingAs($article->user, ['articles:modify-categories']);
+
+        $this->jsonApi()
+            ->withData([
+                'type' => 'categories',
+                'id' => $category->getRouteKey()
+            ])
+            ->patch(route('api.v1.articles.relationships.categories.replace', $article))
+            ->assertStatus(204)
+        ;
+
+        $this->assertDatabaseHas('articles', [
+            'category_id' => $category->id
+        ]);
+    }
+
+    /** @test */
+    public function can_replace_the_authors()
+    {
+        $article = Article::factory()->create();
+        $author = User::factory()->create();
+
+        Sanctum::actingAs($article->user, ['articles:modify-authors']);
+
+        $this->jsonApi()
+            ->withData([
+                'type' => 'authors',
+                'id' => $author->getRouteKey()
+            ])
+            ->patch(route('api.v1.articles.relationships.authors.replace', $article))
+            ->assertStatus(204)
+        ;
+
+        $this->assertDatabaseHas('articles', [
+            'user_id' => $author->id
+        ]);
+    }
 }

@@ -26,4 +26,16 @@ class ArticlePolicy
         return $user->tokenCan('articles:delete') &&
             $article->user->is($user);
     }
+
+    public function modifyCategories(User $user, $article)
+    {
+        return $user->tokenCan('articles:modify-categories') &&
+            $article->user->is($user);
+    }
+
+    public function modifyAuthors(User $user, $article)
+    {
+        return $user->tokenCan('articles:modify-authors') &&
+            $article->user->is($user);
+    }
 }
