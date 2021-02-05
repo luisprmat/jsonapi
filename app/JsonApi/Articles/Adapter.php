@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 
 class Adapter extends AbstractAdapter
 {
-    protected $guarded = ['id'];
+    protected $fillable = ['title', 'slug', 'content', 'categories'];
 
     protected $includePaths = [
         'authors' => 'user',
@@ -52,7 +52,7 @@ class Adapter extends AbstractAdapter
 
     protected function fillAttributes($article, Collection $attributes)
     {
-        $article->fill($attributes->toArray());
+        $article->fill($attributes->only($this->fillable)->toArray());
         $article->user_id = auth()->id();
     }
 
