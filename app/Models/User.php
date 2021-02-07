@@ -45,4 +45,14 @@ class User extends Authenticatable
         return $this->hasMany(Article::class);
     }
 
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class);
+    }
+
+    public function givePermissionTo(Permission $permission)
+    {
+        $this->permissions()->syncWithoutDetaching($permission);
+    }
+
 }
