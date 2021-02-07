@@ -120,16 +120,16 @@
         },
         {
             "name": "cloudcreativity/laravel-json-api",
-            "version": "v3.2.0",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cloudcreativity/laravel-json-api.git",
-                "reference": "2189d7d358f2a3b818542eebc36c1e0c7b3e6be6"
+                "reference": "30247140e1e83692f963c6aa009e4ef9c054da98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cloudcreativity/laravel-json-api/zipball/2189d7d358f2a3b818542eebc36c1e0c7b3e6be6",
-                "reference": "2189d7d358f2a3b818542eebc36c1e0c7b3e6be6",
+                "url": "https://api.github.com/repos/cloudcreativity/laravel-json-api/zipball/30247140e1e83692f963c6aa009e4ef9c054da98",
+                "reference": "30247140e1e83692f963c6aa009e4ef9c054da98",
                 "shasum": ""
             },
             "require": {
@@ -205,9 +205,9 @@
             ],
             "support": {
                 "issues": "https://github.com/cloudcreativity/laravel-json-api/issues",
-                "source": "https://github.com/cloudcreativity/laravel-json-api/tree/v3.2.0"
+                "source": "https://github.com/cloudcreativity/laravel-json-api/tree/v3.3.0"
             },
-            "time": "2020-11-26T11:02:55+00:00"
+            "time": "2021-02-06T08:46:15+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
