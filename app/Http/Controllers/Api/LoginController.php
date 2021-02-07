@@ -30,4 +30,11 @@ class LoginController extends Controller
             'plain-text-token' => $user->createToken($request->device_name)->plainTextToken
         ]);
     }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->noContent();
+    }
 }

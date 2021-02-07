@@ -29,5 +29,9 @@ JsonApi::register('v1')->routes(function($api){
         $api->hasMany('articles')->except('replace', 'add', 'remove');
     });
 
-    Route::post('login', [LoginController::class, 'login'])->name('login');
+    Route::post('login', [LoginController::class, 'login'])->name('login')
+        ->middleware('guest:sanctum');
+
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout')
+        ->middleware('auth:sanctum');
 });

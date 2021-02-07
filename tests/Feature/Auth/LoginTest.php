@@ -24,7 +24,10 @@ class LoginTest extends TestCase
 
         $token = $response->json('plain-text-token');
 
-        $this->assertTrue(PersonalAccessToken::findToken($token)->exists);
+        $this->assertNotNull(
+            PersonalAccessToken::findToken($token),
+            'The plain text token is invalid'
+        );
     }
 
     /** @test */
@@ -77,5 +80,18 @@ class LoginTest extends TestCase
             'password' => 'password',
             'device_name' => ''
         ])->assertJsonValidationErrors('device_name');
+    }
+
+    /** @test */
+    public function can_login_twice()
+    {
+        $user = User::factory()->create();
+
+        $token = $user->createToken($user->name)->plainTextToken;
+
+        $this->withHeader('Authorization', 'Bearer '.$token)
+            ->postJson(route('api.v1.login'))
+            ->assertStatus(204)
+        ;
     }
 }
