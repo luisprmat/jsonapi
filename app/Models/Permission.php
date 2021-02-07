@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Permission extends Model
 {
     use HasFactory;
+
+    public static $abilities = [
+        'create',
+        'view',
+        'update',
+        'delete',
+    ];
+
+    protected $guarded = [];
 }
