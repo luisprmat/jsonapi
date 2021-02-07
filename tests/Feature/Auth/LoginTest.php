@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Models\Permission;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -28,6 +29,35 @@ class LoginTest extends TestCase
             PersonalAccessToken::findToken($token),
             'The plain text token is invalid'
         );
+    }
+
+    /** @test */
+    function user_permisisons_are_assigned_as_abilities_to_the_token_response()
+    {
+        $user = User::factory()->create();
+
+        $permission1 = Permission::factory()->create([
+            'name' => $articlesCreatePermission = 'articles:create'
+        ]);
+
+        $permission2 = Permission::factory()->create([
+            'name' => $articlesUpdatePermission = 'articles:update'
+        ]);
+
+        $user->givePermissionTo($permission1);
+        $user->givePermissionTo($permission2);
+
+        $response = $this->postJson(route('api.v1.login'), [
+            'email' => $user->email,
+            'password' => 'password',
+            'device_name' => 'iPhone de '.$user->name
+        ]);
+
+        $dbToken = PersonalAccessToken::findToken($response->json('plain-text-token'));
+
+        $this->assertTrue($dbToken->can($articlesCreatePermission));
+        $this->assertTrue($dbToken->can($articlesUpdatePermission));
+        $this->assertFalse($dbToken->can('articles:delete'));
     }
 
     /** @test */

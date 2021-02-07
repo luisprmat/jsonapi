@@ -16,11 +16,13 @@ class TokenResponse implements Responsable
 
     public function toResponse($request)
     {
+        $token = $this->user->createToken(
+            $request->device_name,
+            $this->user->permissions->pluck('name')->toArray()
+        );
+
         return response()->json([
-            'plain-text-token' => $this->user->createToken(
-                $request->device_name,
-                // $this->user->permissions->pluck('name')->toArray()
-            )->plainTextToken
+            'plain-text-token' => $token->plainTextToken
         ]);
     }
 }
