@@ -2,11 +2,15 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Article;
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Console\ConfirmableTrait;
 
 class GenerateTestingData extends Command
 {
+    use ConfirmableTrait;
     /**
      * The name and signature of the console command.
      *
@@ -38,13 +42,20 @@ class GenerateTestingData extends Command
      */
     public function handle()
     {
-        User::truncate();
-        // User::query()->delete();
+        if(! $this->confirmToProceed()) {
+            return 1;
+        }
 
-        $user = User::factory()->create([
+        User::query()->delete();
+        Article::query()->delete();
+        Category::query()->delete();
+
+        $user = User::factory()->hasArticles(1)->create([
             'name' => 'Luis',
             'email' => 'luisprmat@gmail.com'
         ]);
+
+        $articles = Article::factory()->count(14)->create();
 
         $this->info('User UUID:');
         $this->line($user->id);
@@ -52,6 +63,10 @@ class GenerateTestingData extends Command
         $this->info('Token:');
         $this->line($user->createToken('Luis')->plainTextToken);
 
+        $this->info('Article ID:');
+        $this->line($user->articles->first()->slug);
 
+        $this->info('Category ID:');
+        $this->line($articles->first()->category->id);
     }
 }
