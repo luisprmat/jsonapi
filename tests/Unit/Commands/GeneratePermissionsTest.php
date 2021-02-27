@@ -22,15 +22,15 @@ class GeneratePermissionsTest extends TestCase
         $this->artisan('generate:permissions')
             ->expectsOutput('Permissions generated!');
 
-        $this->assertDatabaseCount('permissions', count(Permission::$abilities));
+        foreach(Permission::$abilities as $ability) {
+            $this->assertDatabaseHas('permissions', [
+                    'name' => "articles:{$ability}"
+                ]);
+        }
 
         $this->artisan('generate:permissions')
             ->expectsOutput('Permissions generated!');
 
-        foreach(Permission::$abilities as $ability) {
-            $this->assertDatabaseHas('permissions', [
-                'name' => "articles:{$ability}"
-            ]);
-        }
+        $this->assertDatabaseCount('permissions', count(Permission::$abilities));
     }
 }
