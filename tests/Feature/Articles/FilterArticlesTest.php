@@ -4,6 +4,7 @@ namespace Tests\Feature\Articles;
 
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -201,6 +202,36 @@ class FilterArticlesTest extends TestCase
         $this->jsonApi()
             ->filter([
                 'categories' => $category1->getRouteKey().','.$category2->getRouteKey()
+            ])
+            ->get(route('api.v1.articles.index'))
+            ->assertJsonCount(5, 'data')
+        ;
+    }
+
+    /** @test */
+    function can_filter_articles_by_authors()
+    {
+        $author = User::factory()->hasArticles(2)->create();
+        Article::factory()->count(2)->create();
+
+        $this->jsonApi()
+            ->filter(['authors' => $author->name])
+            ->get(route('api.v1.articles.index'))
+            ->assertJsonCount(2, 'data')
+        ;
+    }
+
+    /** @test */
+    function can_filter_articles_by_multiple_authors()
+    {
+        $author1 = User::factory()->hasArticles(2)->create();
+        $author2 = User::factory()->hasArticles(3)->create();
+
+        Article::factory()->count(2)->create();
+
+        $this->jsonApi()
+            ->filter([
+                'authors' => $author1->name.','.$author2->name
             ])
             ->get(route('api.v1.articles.index'))
             ->assertJsonCount(5, 'data')
